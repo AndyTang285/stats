@@ -31,7 +31,7 @@ double sum(vector<double> v) {
 //EFFECTS: returns the arithmetic mean of the numbers in v
 //  http://en.wikipedia.org/wiki/Arithmetic_mean
 double mean(vector<double> v) {
-    double mean = sum(v)/count(v);
+    return sum(v)/count(v);
 }
 
 //REQUIRES: v is not empty
@@ -124,17 +124,17 @@ double stdev(vector<double> v) {
 //  NOTE: the definition in the spec uses indexing from 1.  You will need to
 //  adapt it to use indexing from 0.
 double percentile(vector<double> v, double p) {
-    //compute the rank
 
     sort(v.begin(), v.end());
 
-    double rank = p * (count(v)) + 1;
+    double rank = p * (count(v) - 1) + 1;
 
     int k = rank;
-    int d = rank - k;
+    double d = rank - k;
 
-    int percentile = 
+    double percentile = v[k - 1] + d * (v[k] - v[k - 1]);
 
+    return percentile;
 
 }
 
@@ -143,6 +143,21 @@ double percentile(vector<double> v, double p) {
 //         only those elements) at v[x] where criteria[x] is equal to target,
 //         in the same order as they originally appear in v.
 //         Note: For this function, compare values to the criteria using ==.
-std::vector<double> filter(vector<double> v,
-                           vector<double> criteria,
-                           double target);
+vector<double> filter(vector<double> v,
+                      vector<double> criteria,
+                      double target) {
+
+
+    vector<double> filteredV;
+
+    for (int i = 0; i < count(v); i++) {
+        if (target == criteria[i]) {
+
+            filteredV.push_back(v[i]);
+
+        }
+    }
+                        
+    return filteredV;
+                        
+}
